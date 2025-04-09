@@ -4,15 +4,30 @@
     <meta charset="UTF-8">
     <title>{% block title %}To-Do App{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>📝 My To-Do App</h1>
+        <button onclick="toggleDarkMode()" style="float: right;">🌓 Toggle Dark Mode</button>
+        <h1>📝To-Do List</h1>
     </header>
 
     <main>
         {% block content %}{% endblock %}
     </main>
-
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark');
+            localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+        }
+    
+        window.onload = () => {
+            const theme = localStorage.getItem('theme');
+            if (theme === 'dark') {
+                document.body.classList.add('dark');
+            }
+        };
+    </script>    
 </body>
 </html>
