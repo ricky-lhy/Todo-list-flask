@@ -7,21 +7,42 @@
     <input type="text" name="task" required>
     <button type="submit">Add</button>
 </form>
-
+<form method="get" style="margin-bottom: 1rem;">
+    <button type="submit" name="sort" value="{{ 'asc' if sort_order == 'desc' else 'desc' }}">
+        Sort by Date: {{ 'Oldest First' if sort_order == 'desc' else 'Newest First' }}
+    </button>
+</form>
 <ul>
     {% for idx, task in tasks %}
     <li>
         <form action="{{ url_for('toggle', task_id=idx) }}" method="POST" style="display:inline;">
             <input type="checkbox" onchange="this.form.submit()" {% if task.done %}checked{% endif %}>
         </form>
-
-        <span class="{% if task.done %}done{% endif %}">
-            {{ task.content }}
-        </span>
-
+    
+        {% if request.args.get('edit') == idx|string %}
+            <!-- Edit Mode -->
+            <form action="{{ url_for('edit', task_id=idx) }}" method="POST" style="display:inline;">
+                <input type="text" name="content" value="{{ task.content }}" autofocus>
+                <button type="submit">Save</button>
+            </form>
+        {% else %}
+            <!-- Normal View -->
+            <span class="{% if task.done %}done{% endif %}">
+                {{ task.content }}
+            </span>
+            <form method="get" action="/" style="display:inline;">
+                <input type="hidden" name="edit" value="{{ idx }}">
+                <button type="submit">Edit</button>
+            </form>
+        {% endif %}
+    
         <form action="{{ url_for('delete', task_id=idx) }}" method="POST" style="display:inline; margin-left: 1rem;">
             <button type="submit">Delete</button>
         </form>
+    
+        <small style="margin-left: 0.5rem; font-size: 0.8rem; color: gray;">
+            ({{ task.created_at[:10] }})
+        </small>
     </li>
     {% endfor %}
 </ul>
