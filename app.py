@@ -23,18 +23,21 @@ def save_tasks(tasks):
 def index():
     tasks = load_tasks()
     sort_order = request.args.get('sort', 'desc')
-    tasks.sort(key=lambda t: (t['done'], datetime.fromisoformat(t['created_at']).timestamp() * (-1 if sort_order == 'desc' else 1)))
+    tasks.sort(key=lambda t: (t['done'], 
+    datetime.fromisoformat(t['created_at']).timestamp() * (-1 if sort_order == 'desc' else 1)))
     return render_template('index.html', tasks=enumerate(tasks), sort_order=sort_order)
 
 @app.route('/add', methods=['POST'])
 def add():
     tasks = load_tasks()
     task_content = request.form.get('task')
+    priority = request.form.get('priority', 'Medium')
     if task_content:
         tasks.append({
             'content': task_content,
             'done': False,
-            'created_at': datetime.now().isoformat()
+            'created_at': datetime.now().isoformat(),
+            'priority': priority
         })
         save_tasks(tasks)
     return redirect(url_for('index'))
