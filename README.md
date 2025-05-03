@@ -17,6 +17,7 @@ Supports task creation, editing, completion tracking, priority levels, dark mode
 ```
 /
 ├── app.py                 # Main Flask app
+├── Dockerfile             # Dockerfile
 ├── tasks.json             # JSON file for task storage
 ├── test_app.py            # Pytest-based unit tests
 ├── requirements.txt       # Python package requirements
@@ -34,10 +35,35 @@ Clone this repo
 git clone https://github.com/your-username/Todo-list-flask.git
 cd Todo-list-flask
 ```
-Run the app
+
+## Docker Usage
+
+### Build Image (Local)
+
+```bash
+docker build -t 2025cloud .
 ```
-export FLASK_APP=app.py
-flask run
+
+### Run Container
+```bash
+docker run -p 5000:5000 2025cloud
 ```
+
 Then open your browser to:
 http://127.0.0.1:5000
+
+
+## GitHub Actions (CI/CD)
+This project uses GitHub Actions to:
+- Automatically build the Docker image on every push or pull request
+- Tag the image as latest and <commit SHA>
+- Push the image to Docker Hub at [rickylhy/2025cloud](https://hub.docker.com/r/rickylhy/2025cloud)
+
+## Docker build flow
+```mermaid
+flowchart LR
+    A[GitHub Push] --> B[GitHub Action]
+    B --> C[Docker Build]
+    C --> D[Docker Hub]
+    C --> E[Tags: latest, SHA]
+```
