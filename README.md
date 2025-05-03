@@ -68,12 +68,12 @@ flowchart LR
     D --> E[Push to Docker Hub]
 ```
 
-## (Optional) Manually tag and push to Docker Hub
+(Optional) Manually tag and push to Docker Hub
 ```bash
 docker tag 2025cloud rickylhy/2025cloud:latest
 docker push rickylhy/2025cloud:latest
 ```
 
-## 🏷️ Docker Tag Strategy
+🏷️ Docker Tag Strategy
 - latest: always points to the most recent successful build
 - commit SHA: allows traceability for each deployment
