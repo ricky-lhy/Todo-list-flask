@@ -37,7 +37,7 @@ cd Todo-list-flask
 ```
 
 ## 🐳 Docker Usage
-(Issue #6)
+[(Issue #6)](https://github.com/ricky-lhy/Todo-list-flask/issues/6)
 ### Build Image (Local)
 
 ```bash
@@ -62,7 +62,8 @@ This project uses GitHub Actions to:
 ## 📦 Docker build flow
 ```mermaid
 flowchart LR
-    A[GitHub Push] --> B[GitHub Action]
+    A1[GitHub Push] --> B[GitHub Action]
+    A2[Pull Request] --> B
     B --> C[Docker Build]
     C --> D[Tag as 'latest' and SHA]
     D --> E[Push to Docker Hub]
