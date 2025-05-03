@@ -76,4 +76,4 @@ docker push rickylhy/2025cloud:latest
 
 ## 🏷️ Docker Tag Strategy
 - latest: always points to the most recent successful build
-- <commit SHA>: allows traceability for each deployment
+- commit SHA: allows traceability for each deployment
